@@ -1,5 +1,5 @@
 // URL of your quotes JSON file on GitHub
-const quotesUrl = "https://raw.githubusercontent.com/your-username/motivational-quotes/main/quotes.json"; // Replace this URL with your own
+const quotesUrl = "https://raw.githubusercontent.com/stanwissink/quotes_daily/main/quotes1.json"; // Replace this URL with your own
 
 // Customizable colors
 const backgroundColor = new Color("#002626"); // Set your desired background color
