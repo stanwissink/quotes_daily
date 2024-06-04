@@ -1,10 +1,9 @@
 // URL of your quotes JSON file on GitHub
-const quotesUrl = "https://raw.githubusercontent.com/stanwissink/quotes_daily/main/quotes1.json"; // Replace this URL with your own
+const quotesUrl = "https://raw.githubusercontent.com/your-username/motivational-quotes/main/quotes.json"; // Replace this URL with your own
 
 // Customizable colors
 const backgroundColor = new Color("#002626"); // Set your desired background color
 const fontColor = new Color("#FFC745"); // Set your desired font color
-const fontSize = 16; // Set the font size
 
 // Function to fetch quotes from the URL
 async function fetchQuotes(url) {
@@ -21,6 +20,43 @@ function getQuote(quotes) {
   return quotes[index]; // Select the quote for the current day
 }
 
+// Estimate the required font size based on the length of the quote
+function estimateFontSize(text, maxWidth, maxHeight) {
+  const baseFontSize = 16; // Starting font size
+  const maxFontSize = 30; // Maximum font size
+  const minFontSize = 10; // Minimum font size
+  
+  let fontSize = baseFontSize;
+  let widget = new ListWidget();
+  let quoteText = widget.addText(text);
+  
+  // Increase the font size until the text fits the widget dimensions
+  while (fontSize <= maxFontSize) {
+    quoteText.font = Font.boldSystemFont(fontSize);
+    let textSize = quoteText.size();
+    
+    if (textSize.width <= maxWidth && textSize.height <= maxHeight) {
+      fontSize++;
+    } else {
+      break;
+    }
+  }
+  
+  // Decrease the font size until the text fits the widget dimensions
+  while (fontSize >= minFontSize) {
+    quoteText.font = Font.boldSystemFont(fontSize);
+    let textSize = quoteText.size();
+    
+    if (textSize.width <= maxWidth && textSize.height <= maxHeight) {
+      return fontSize;
+    } else {
+      fontSize--;
+    }
+  }
+  
+  return fontSize;
+}
+
 // Create the widget
 async function createWidget() {
   let quotes = await fetchQuotes(quotesUrl); // Fetch quotes from the online source
@@ -29,10 +65,17 @@ async function createWidget() {
   let widget = new ListWidget();
   widget.backgroundColor = backgroundColor;
   
+  // Estimate the widget dimensions (for a medium widget)
+  const maxWidth = 155;
+  const maxHeight = 155;
+  
+  // Estimate the required font size to fit the widget
+  let fontSize = estimateFontSize(quote, maxWidth, maxHeight);
+  
   widget.addSpacer(); // Add spacer to center text vertically
   
   let quoteText = widget.addText(quote);
-  quoteText.font = Font.boldSystemFont(fontSize); // Use a predefined font style and size
+  quoteText.font = Font.boldSystemFont(fontSize); // Use the estimated font size
   quoteText.textColor = fontColor;
   quoteText.centerAlignText(); // Center align the text horizontally
   
