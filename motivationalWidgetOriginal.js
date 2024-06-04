@@ -1,10 +1,11 @@
 // URL of your quotes JSON file on GitHub
 const quotesUrl = "https://raw.githubusercontent.com/stanwissink/quotes_daily/main/quotes1.json"; // Replace this URL with your own
 
-// Customizable colors
+// Customization
 const backgroundColor = new Color("#002626"); // Set your desired background color
 const fontColor = new Color("#FFC745"); // Set your desired font color
 const fontSize = 16; // Set the font size
+const grainSize = 0.5; // Set grain size
 
 // Function to fetch quotes from the URL
 async function fetchQuotes(url) {
@@ -34,7 +35,7 @@ function createGrainyBackground(width, height, color) {
     let y = Math.random() * height;
     let alpha = Math.random() * 0.1; // Random opacity
     ctx.setFillColor(new Color("#FFFFFF", alpha));
-    ctx.fillRect(new Rect(x, y, 1, 1));
+    ctx.fillRect(new Rect(x, y, grainSize, grainSize));
   }
 
   return ctx.getImage();
@@ -48,7 +49,7 @@ async function createWidget() {
   let widget = new ListWidget();
   
   // Create a grainy background image
-  const grainyBackground = createGrainyBackground(155, 155, backgroundColor);
+  const grainyBackground = createGrainyBackground(329, 155, backgroundColor);
   widget.backgroundImage = grainyBackground;
   
   widget.addSpacer(); // Add spacer to center text vertically
