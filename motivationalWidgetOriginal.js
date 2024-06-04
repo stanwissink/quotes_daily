@@ -21,13 +21,35 @@ function getQuote(quotes) {
   return quotes[index]; // Select the quote for the current day
 }
 
+// Function to create a grainy background
+function createGrainyBackground(width, height, color) {
+  let ctx = new DrawContext();
+  ctx.size = new Size(width, height);
+  ctx.setFillColor(color);
+  ctx.fillRect(new Rect(0, 0, width, height));
+
+  // Add grain effect
+  for (let i = 0; i < 10000; i++) {
+    let x = Math.random() * width;
+    let y = Math.random() * height;
+    let alpha = Math.random() * 0.1; // Random opacity
+    ctx.setFillColor(new Color("#FFFFFF", alpha));
+    ctx.fillRect(new Rect(x, y, 1, 1));
+  }
+
+  return ctx.getImage();
+}
+
 // Create the widget
 async function createWidget() {
   let quotes = await fetchQuotes(quotesUrl); // Fetch quotes from the online source
   let quote = getQuote(quotes);
   
   let widget = new ListWidget();
-  widget.backgroundColor = backgroundColor;
+  
+  // Create a grainy background image
+  const grainyBackground = createGrainyBackground(155, 155, backgroundColor);
+  widget.backgroundImage = grainyBackground;
   
   widget.addSpacer(); // Add spacer to center text vertically
   
@@ -46,6 +68,6 @@ let widget = await createWidget();
 if (config.runsInWidget) {
   Script.setWidget(widget);
 } else {
-  widget.presentMedium();
+  widget.presentSmall(); // Present as a small widget
 }
 Script.complete();
