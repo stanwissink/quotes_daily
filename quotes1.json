@@ -1,4 +1,4 @@
-/ Make sure array doesn't exceed 365
+// Make sure array doesn't exceed 365
 {
   "quotes": [
     "The only bad workout is the one that didn't happen.",
