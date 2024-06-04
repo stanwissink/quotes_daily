@@ -2,7 +2,7 @@
 const quotesUrl = "https://raw.githubusercontent.com/stanwissink/quotes_daily/main/quotes1.json"; // Replace this URL with your own
 
 // Customization
-const backgroundColor = new Color("#00192B"); // Set your desired background color
+const backgroundColor = new Color("#000B14"); // Set your desired background color
 const fontColor = new Color("#FFFFFF"); // Set your desired font color
 const fontSize = 16; // Set the font size
 const grainSize = 0.5; // Set grain size
