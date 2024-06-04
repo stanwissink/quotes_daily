@@ -66,8 +66,8 @@ async function createWidget() {
   let widget = new ListWidget();
   widget.backgroundColor = backgroundColor;
   
-  // Estimate the widget dimensions (for a medium widget)
-  const maxWidth = 329;
+    // Estimate the widget dimensions (for a small widget)
+  const maxWidth = 155;
   const maxHeight = 155;
   
   // Estimate the required font size to fit the widget
